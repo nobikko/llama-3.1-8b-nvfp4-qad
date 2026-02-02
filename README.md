@@ -2,6 +2,11 @@
 
 NVIDIAのQAD（Quantization-Aware Distillation）手法を用いて、Llama 3.1 8BをNVFP4形式に量子化するプロジェクトです。99.4%の精度回復を実現します。
 
+## 📚 ドキュメント
+
+- **[環境構築ガイド](docs/ENVIRONMENT_SETUP.md)** - 詳細なセットアップ手順（Windows/Linux/Docker）
+- **[環境検証スクリプト](scripts/check_environment.py)** - 環境の自動検証
+
 ## Overview
 
 このプロジェクトは以下の3段階で構成されています：
@@ -55,6 +60,9 @@ venv\Scripts\activate  # Windows
 
 # 依存関係のインストール
 pip install -r requirements.txt
+
+# 環境検証
+python scripts/check_environment.py
 ```
 
 ### 2. 特別な要件
