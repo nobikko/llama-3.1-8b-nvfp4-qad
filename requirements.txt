@@ -1,0 +1,30 @@
+torch>=2.5.0
+transformers>=4.45.0
+datasets>=2.14.0
+accelerate>=0.34.0
+peft>=0.13.0
+sentencepiece>=0.2.0
+protobuf>=3.20.0
+numpy>=1.24.0
+tqdm>=4.65.0
+safetensors>=0.4.0
+huggingface-hub>=0.25.0
+
+# QAD and quantization
+modelopt>=0.21.0
+tensorrt-model-optimizer>=0.21.0
+llmcompressor>=0.5.0
+compressed-tensors>=0.8.0
+
+# vLLM for inference
+vllm>=0.8.0
+
+# Optional but recommended
+wandb>=0.18.0
+tensorboard>=2.15.0
+flash-attn>=2.5.0; platform_system=="Linux"
+
+# Development
+pytest>=7.4.0
+black>=23.0.0
+isort>=5.12.0

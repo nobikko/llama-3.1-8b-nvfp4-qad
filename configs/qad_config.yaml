@@ -1,0 +1,76 @@
+# QAD Training Configuration for Llama 3.1 8B NVFP4
+
+model:
+  teacher_model: "meta-llama/Llama-3.1-8B-Instruct"
+  student_model: null  # Will be created from teacher
+  model_revision: "main"
+  trust_remote_code: false
+  torch_dtype: "bfloat16"
+
+dataset:
+  name: "HuggingFaceH4/ultrachat_200k"
+  split: "train_sft"
+  num_samples: 50000  # Number of samples for QAD training
+  max_seq_length: 2048
+  text_column: "messages"
+  shuffle: true
+  seed: 42
+
+qad:
+  # Quantization configuration
+  quantization_scheme: "NVFP4"
+  quantization_config:
+    weights:
+      num_bits: 4
+      type: "float"
+      symmetric: false
+      group_size: 16
+    activations:
+      num_bits: 4
+      type: "float"
+      symmetric: false
+  
+  # Training configuration
+  num_epochs: 3
+  batch_size: 1
+  gradient_accumulation_steps: 8
+  learning_rate: 1.0e-5
+  weight_decay: 0.01
+  warmup_steps: 500
+  max_grad_norm: 1.0
+  
+  # Distillation configuration
+  temperature: 2.0
+  alpha: 0.5  # Weight for distillation loss vs task loss (0.5 = balanced)
+  
+  # Optimization
+  optimizer: "adamw_torch"
+  lr_scheduler: "cosine"
+  fp16: false
+  bf16: true
+  dataloader_num_workers: 4
+  dataloader_pin_memory: true
+  
+  # Checkpointing
+  save_steps: 500
+  eval_steps: 500
+  logging_steps: 10
+  save_total_limit: 3
+  
+  # Hardware
+  device: "cuda"
+  num_gpus: 8  # Recommended for 8B model QAD
+  deepspeed: null  # Path to deepspeed config if using
+
+inference:
+  max_tokens: 2048
+  temperature: 0.7
+  top_p: 0.9
+  tensor_parallel_size: 1
+  gpu_memory_utilization: 0.90
+
+paths:
+  output_dir: "./outputs/llama-3.1-8b-nvfp4-qad"
+  checkpoint_dir: "./checkpoints"
+  log_dir: "./logs"
+  cache_dir: "./cache"
